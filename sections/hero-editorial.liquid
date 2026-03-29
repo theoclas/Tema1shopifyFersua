@@ -40,7 +40,7 @@
 
 {% style %}
   #shopify-section-{{ section.id }} .allset-hero {
-    min-height: {{ section.settings.min_height }}vh;
+    min-height: {{ section.settings.min_height | default: 78 }}vh;
   }
 {% endstyle %}
 

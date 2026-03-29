@@ -1,4 +1,5 @@
 {
+  "layout": "theme",
   "sections": {
     "header_main": {
       "type": "header-allset",
