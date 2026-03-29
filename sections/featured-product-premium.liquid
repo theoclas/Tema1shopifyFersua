@@ -1,0 +1,95 @@
+{%- comment -%}
+  Producto destacado — imagen grande y copy sobrio.
+{%- endcomment -%}
+
+{%- assign product = section.settings.product -%}
+
+<section class="allset-section" id="section-{{ section.id }}">
+  <div class="allset-container">
+    {%- if product != blank -%}
+      <div class="allset-fp">
+        <a class="allset-fp__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+          {%- assign media = product.featured_media | default: product.featured_image -%}
+          {%- if media != blank -%}
+            {{
+              media
+              | image_url: width: 1400
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(min-width: 990px) 55vw, 100vw',
+                widths: '550, 750, 1100, 1400',
+                alt: media.alt | default: product.title | escape
+            }}
+          {%- endif -%}
+        </a>
+
+        <div class="allset-fp__copy">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="allset-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          <h2 class="allset-heading allset-heading--md">
+            <a href="{{ product.url }}" style="text-decoration:none;color:inherit;">{{ product.title | escape }}</a>
+          </h2>
+          <div class="allset-product__price-row">
+            {% render 'price', product: product %}
+          </div>
+          {%- if section.settings.custom_excerpt != blank -%}
+            <div class="allset-prose allset-fp__excerpt">{{ section.settings.custom_excerpt }}</div>
+          {%- elsif product.metafields.custom.excerpt != blank -%}
+            <div class="allset-prose allset-fp__excerpt">{{ product.metafields.custom.excerpt | metafield_tag }}</div>
+          {%- elsif product.description != blank -%}
+            <div class="allset-prose allset-fp__excerpt">{{ product.description | strip_html | truncatewords: 28 }}</div>
+          {%- endif -%}
+          <div style="margin-top:1.75rem;">
+            <a class="allset-btn" href="{{ product.url }}">{{ section.settings.button_label | escape }}</a>
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      <p class="allset-prose" style="text-align:center;">{{ section.settings.empty_state | escape }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured product",
+  "tag": "section",
+  "class": "section-featured-product-premium",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Pieza del momento"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "richtext",
+      "id": "custom_excerpt",
+      "label": "Custom excerpt (optional)"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Ver detalle"
+    },
+    {
+      "type": "text",
+      "id": "empty_state",
+      "label": "Empty state",
+      "default": "Selecciona un producto en el editor del tema."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured product"
+    }
+  ]
+}
+{% endschema %}

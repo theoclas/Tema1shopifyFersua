@@ -1,0 +1,61 @@
+{%- comment -%}
+  Listado de todas las colecciones.
+{%- endcomment -%}
+
+<section class="allset-section" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <header class="allset-collection__head">
+      <h1 class="allset-heading allset-heading--lg">{{ section.settings.title | escape }}</h1>
+    </header>
+    {%- paginate collections by 24 -%}
+      <div class="allset-grid-products allset-grid-products--4">
+        {%- for collection in collections -%}
+          {%- unless collection.handle == 'frontpage' -%}
+            <a class="allset-product-card" href="{{ collection.url }}">
+              <div class="allset-product-card__media">
+                {%- if collection.featured_image != blank -%}
+                  {{
+                    collection.featured_image
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'allset-product-card__img',
+                      sizes: '(min-width: 990px) 25vw, 50vw',
+                      widths: '375, 550, 750, 800',
+                      alt: collection.featured_image.alt | default: collection.title | escape
+                  }}
+                {%- else -%}
+                  <div class="allset-product-card__placeholder" aria-hidden="true"></div>
+                {%- endif -%}
+              </div>
+              <div class="allset-product-card__body">
+                <h2 class="allset-product-card__title">{{ collection.title | escape }}</h2>
+              </div>
+            </a>
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="allset-pagination" style="margin-top:2rem;text-align:center;" aria-label="Pagination">
+          {%- if paginate.previous -%}<a class="allset-btn" href="{{ paginate.previous.url }}">←</a>{% endif -%}
+          {%- if paginate.next -%}<a class="allset-btn" href="{{ paginate.next.url }}">→</a>{% endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "List collections",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Colecciones"
+    }
+  ]
+}
+{% endschema %}

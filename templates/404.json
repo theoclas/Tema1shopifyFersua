@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "header_main": {
+      "type": "header-allset",
+      "settings": {
+        "menu": "main-menu",
+        "logo_position": "center",
+        "search_hint": "Busca en la colección"
+      }
+    },
+    "main": {
+      "type": "main-404",
+      "settings": {}
+    },
+    "footer_main": {
+      "type": "footer-allset",
+      "settings": {
+        "brand_title": "ALLSET JEWELRY",
+        "menu_title": "Explorar",
+        "menu": "footer",
+        "social_title": "Síguenos"
+      }
+    }
+  },
+  "order": ["header_main", "main", "footer_main"]
+}

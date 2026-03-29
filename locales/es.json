@@ -1,0 +1,82 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Etiquetado \"{{ tags }}\"",
+      "page": "Página {{ page }}"
+    },
+    "search": {
+      "search": "Buscar"
+    },
+    "continue_shopping": "Seguir comprando",
+    "cart": {
+      "view": "Ver carrito",
+      "title": "Carrito"
+    },
+    "menu": {
+      "open": "Abrir menú",
+      "close": "Cerrar menú"
+    },
+    "password_page": {
+      "password": "Contraseña de la tienda",
+      "submit": "Entrar"
+    }
+  },
+  "accessibility": {
+    "close": "Cerrar",
+    "skip_to_content": "Ir al contenido",
+    "refresh_page": "Al elegir una opción se actualiza la página.",
+    "link_messages": {
+      "new_window": "Se abre en una nueva ventana."
+    },
+    "loading": "Cargando…"
+  },
+  "products": {
+    "product": {
+      "price": {
+        "from_price_html": "Desde {{ price }}"
+      },
+      "variant": "Variante",
+      "add_to_cart": "Añadir al carrito",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible",
+      "quantity": {
+        "label": "Cantidad"
+      },
+      "value_unavailable": "{{ option_value }} — No disponible",
+      "include_taxes": "Impuestos incluidos.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Envío</a> calculado al pagar."
+    }
+  },
+  "sections": {
+    "cart": {
+      "product": "Producto",
+      "title": "Carrito",
+      "remove_title": "Quitar {{ title }}",
+      "remove": "Quitar",
+      "update": "Actualizar carrito",
+      "line_total": "Total",
+      "subtotal": "Subtotal",
+      "checkout": "Pagar",
+      "empty": "Tu carrito está vacío"
+    },
+    "collection_template": {
+      "empty": "Aún no hay productos en esta colección.",
+      "title": "Colección"
+    }
+  },
+  "templates": {
+    "search": {
+      "no_results": "Sin resultados",
+      "results_with_count": {
+        "one": "{{ count }} resultado",
+        "other": "{{ count }} resultados"
+      },
+      "title": "Búsqueda"
+    }
+  },
+  "customer": {
+    "log_in": "Iniciar sesión",
+    "log_out": "Cerrar sesión",
+    "account": "Cuenta"
+  }
+}

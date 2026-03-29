@@ -1,0 +1,35 @@
+{%- comment -%}
+  Listado de artículos del blog — layout editorial simple.
+{%- endcomment -%}
+
+<section class="allset-section" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <header class="allset-collection__head">
+      <h1 class="allset-heading allset-heading--lg">{{ blog.title | escape }}</h1>
+    </header>
+    <div style="display:grid;gap:2rem;max-width:40rem;margin-inline:auto;">
+      {%- for article in blog.articles -%}
+        <article style="padding-bottom:2rem;border-bottom:1px solid color-mix(in srgb, var(--allset-fg) 8%, transparent);">
+          <h2 class="allset-heading allset-heading--md">
+            <a href="{{ article.url }}" style="text-decoration:none;color:inherit;">{{ article.title | escape }}</a>
+          </h2>
+          <p class="allset-eyebrow" style="margin:0.5rem 0;">{{ article.published_at | time_tag: format: 'date' }}</p>
+          {%- if article.excerpt != blank -%}
+            <div class="allset-prose rte">{{ article.excerpt }}</div>
+          {%- else -%}
+            <div class="allset-prose rte">{{ article.content | strip_html | truncatewords: 42 }}</div>
+          {%- endif -%}
+          <a class="allset-btn" style="margin-top:1rem;" href="{{ article.url }}">Leer</a>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

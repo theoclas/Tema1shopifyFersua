@@ -1,0 +1,82 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "search": "Search"
+    },
+    "continue_shopping": "Continue shopping",
+    "cart": {
+      "view": "View cart",
+      "title": "Cart"
+    },
+    "menu": {
+      "open": "Open menu",
+      "close": "Close menu"
+    },
+    "password_page": {
+      "password": "Store password",
+      "submit": "Enter"
+    }
+  },
+  "accessibility": {
+    "close": "Close",
+    "skip_to_content": "Skip to content",
+    "refresh_page": "Choosing a selection results in a full page refresh.",
+    "link_messages": {
+      "new_window": "Opens in a new window."
+    },
+    "loading": "Loading…"
+  },
+  "products": {
+    "product": {
+      "price": {
+        "from_price_html": "From {{ price }}"
+      },
+      "variant": "Variant",
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": {
+        "label": "Quantity"
+      },
+      "value_unavailable": "{{ option_value }} — Unavailable",
+      "include_taxes": "Tax included.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout."
+    }
+  },
+  "sections": {
+    "cart": {
+      "product": "Product",
+      "title": "Cart",
+      "remove_title": "Remove {{ title }}",
+      "remove": "Remove",
+      "update": "Update cart",
+      "line_total": "Total",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "empty": "Your cart is empty"
+    },
+    "collection_template": {
+      "empty": "No products in this collection yet.",
+      "title": "Collection"
+    }
+  },
+  "templates": {
+    "search": {
+      "no_results": "No results found",
+      "results_with_count": {
+        "one": "{{ count }} result",
+        "other": "{{ count }} results"
+      },
+      "title": "Search"
+    }
+  },
+  "customer": {
+    "log_in": "Log in",
+    "log_out": "Log out",
+    "account": "Account"
+  }
+}

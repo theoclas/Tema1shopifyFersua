@@ -1,0 +1,26 @@
+{%- comment -%}
+  Tarjeta de producto minimalista — editorial, sin badges chillones.
+{%- endcomment -%}
+{%- assign featured = product.featured_media | default: product.featured_image -%}
+<a href="{{ product.url }}" class="allset-product-card">
+  <div class="allset-product-card__media">
+    {%- if featured != blank -%}
+      {{
+        featured
+        | image_url: width: 900
+        | image_tag:
+          loading: 'lazy',
+          sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+          widths: '375, 550, 750, 900',
+          class: 'allset-product-card__img',
+          alt: featured.alt | default: product.title | escape
+      }}
+    {%- else -%}
+      <div class="allset-product-card__placeholder" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+  <div class="allset-product-card__body">
+    <h3 class="allset-product-card__title">{{ product.title | escape }}</h3>
+    {% render 'price', product: product %}
+  </div>
+</a>

@@ -1,0 +1,43 @@
+{%- comment -%}
+  Página 404 — tono de marca, sin ruido.
+{%- endcomment -%}
+
+<section class="allset-section" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <div class="allset-page-header">
+      <p class="allset-eyebrow">404</p>
+      <h1 class="allset-heading allset-heading--lg">{{ section.settings.heading | escape }}</h1>
+      <p class="allset-prose" style="margin: 1rem auto 0;">{{ section.settings.text | escape }}</p>
+      <div style="margin-top:2rem;">
+        <a class="allset-btn" href="{{ routes.root_url }}">{{ section.settings.button_label | escape }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 page",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Esta página no existe"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "El enlace puede haber caducado o la página se ha movido. Vuelve al inicio para seguir explorando."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button",
+      "default": "Volver al inicio"
+    }
+  ]
+}
+{% endschema %}

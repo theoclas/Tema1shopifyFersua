@@ -1,0 +1,88 @@
+{%- comment -%}
+  Carrito — tabla sobria y CTA claro.
+{%- endcomment -%}
+
+<section class="allset-cart" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <h1 class="allset-heading allset-heading--lg allset-cart__title">{{ 'sections.cart.title' | t }}</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" id="cart">
+        <table class="allset-cart__table">
+          <thead>
+            <tr>
+              <th>{{ 'sections.cart.product' | t }}</th>
+              <th>{{ 'products.product.quantity.label' | t }}</th>
+              <th style="text-align:right;">{{ 'sections.cart.line_total' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for item in cart.items -%}
+              <tr>
+                <td>
+                  <div class="allset-cart__line">
+                    {%- if item.image -%}
+                      <img
+                        class="allset-cart__line-img"
+                        src="{{ item.image | image_url: width: 180 }}"
+                        alt="{{ item.image.alt | default: item.title | escape }}"
+                        width="90"
+                        height="110"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                    <div>
+                      <a href="{{ item.url }}">{{ item.product.title | escape }}</a>
+                      {%- unless item.product.has_only_default_variant -%}
+                        <div class="allset-prose" style="font-size:0.8125rem;margin-top:0.25rem;">{{ item.variant.title | escape }}</div>
+                      {%- endunless -%}
+                      <a href="{{ item.url_to_remove }}" style="font-size:0.75rem;color:var(--allset-muted);display:inline-block;margin-top:0.35rem;">
+                        {{ 'sections.cart.remove' | t }}
+                      </a>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <input
+                    class="allset-qty"
+                    type="number"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    aria-label="{{ 'products.product.quantity.label' | t }}"
+                  >
+                </td>
+                <td style="text-align:right;">
+                  {{ item.final_line_price | money }}
+                </td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+
+        <div class="allset-cart__footer">
+          <button type="submit" class="allset-btn" name="update">{{ 'sections.cart.update' | t }}</button>
+          <div>
+            <p class="allset-eyebrow" style="margin-bottom:0.35rem;">{{ 'sections.cart.subtotal' | t }}</p>
+            <p class="allset-heading allset-heading--md" style="margin:0;">{{ cart.total_price | money }}</p>
+          </div>
+          <button type="submit" class="allset-btn allset-btn--gold" name="checkout">{{ 'sections.cart.checkout' | t }}</button>
+        </div>
+      </form>
+    {%- else -%}
+      <p class="allset-prose" style="text-align:center;margin-bottom:1.5rem;">{{ 'sections.cart.empty' | t }}</p>
+      <div style="text-align:center;">
+        <a class="allset-btn" href="{{ routes.all_products_collection_url }}">{{ 'general.continue_shopping' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart (premium)",
+  "tag": "section",
+  "class": "section-main-cart-premium",
+  "settings": []
+}
+{% endschema %}

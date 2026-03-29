@@ -1,0 +1,168 @@
+{%- comment -%}
+  Cabecera minimalista: logo, menú, búsqueda y carrito.
+  Incluye drawer móvil y overlay de búsqueda.
+{%- endcomment -%}
+
+{%- liquid
+  assign logo_left = false
+  if section.settings.logo_position == 'left'
+    assign logo_left = true
+  endif
+-%}
+
+<header class="allset-header" data-allset-header role="banner">
+  <div class="allset-container">
+    <div class="allset-header__inner{% if logo_left %} allset-header__inner--logo-left{% endif %}">
+      <div class="allset-header__left">
+        <button
+          type="button"
+          class="allset-icon-btn allset-menu-toggle"
+          aria-label="{{ 'general.menu.open' | t }}"
+          data-allset-menu-open
+          aria-expanded="false"
+          aria-controls="AllsetMenuDrawer"
+        >
+          {% render 'icon-menu' %}
+        </button>
+
+        {%- if logo_left -%}
+          <a href="{{ routes.root_url }}" class="allset-header__logo">
+            {%- if settings.logo != blank -%}
+              {{
+                settings.logo
+                | image_url: width: 400
+                | image_tag:
+                  class: 'allset-header__logo-img',
+                  widths: '120, 180, 240, 320, 400',
+                  width: settings.logo_width,
+                  alt: shop.name | escape,
+                  loading: 'eager'
+              }}
+            {%- else -%}
+              <span class="allset-header__logo-text">{{ shop.name | upcase }}</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="allset-header__center">
+        {%- unless logo_left -%}
+          <a href="{{ routes.root_url }}" class="allset-header__logo">
+            {%- if settings.logo != blank -%}
+              {{
+                settings.logo
+                | image_url: width: 400
+                | image_tag:
+                  class: 'allset-header__logo-img',
+                  widths: '120, 180, 240, 320, 400',
+                  width: settings.logo_width,
+                  alt: shop.name | escape,
+                  loading: 'eager'
+              }}
+            {%- else -%}
+              <span class="allset-header__logo-text">{{ shop.name | upcase }}</span>
+            {%- endif -%}
+          </a>
+        {%- else -%}
+          <nav class="allset-nav" aria-label="Main">
+            {%- for link in section.settings.menu.links -%}
+              <a class="allset-nav__link" href="{{ link.url }}">{{ link.title | escape }}</a>
+            {%- endfor -%}
+          </nav>
+        {%- endunless -%}
+      </div>
+
+      <div class="allset-header__right">
+        <button type="button" class="allset-icon-btn" data-allset-search-open aria-label="{{ 'general.search.search' | t }}">
+          {% render 'icon-search' %}
+        </button>
+        <a href="{{ routes.cart_url }}" class="allset-icon-btn" aria-label="{{ 'general.cart.view' | t }}">
+          {% render 'icon-cart' %}
+          {%- if cart.item_count > 0 -%}
+            <span class="allset-cart-count">{{ cart.item_count }}</span>
+          {%- endif -%}
+        </a>
+      </div>
+    </div>
+
+    {%- unless logo_left -%}
+      <nav class="allset-nav" aria-label="Main">
+        {%- for link in section.settings.menu.links -%}
+          <a class="allset-nav__link" href="{{ link.url }}">{{ link.title | escape }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endunless -%}
+  </div>
+
+  {%- comment -%} Drawer navegación (móvil) {%- endcomment -%}
+  <div class="allset-drawer" id="AllsetMenuDrawer" data-allset-drawer aria-hidden="true">
+    <div class="allset-drawer__backdrop" data-allset-drawer-backdrop></div>
+    <div class="allset-drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="allset-drawer__head">
+        <span class="allset-header__logo-text" style="font-size:0.85rem;">{{ shop.name | upcase }}</span>
+        <button type="button" class="allset-icon-btn" data-allset-menu-close aria-label="{{ 'general.menu.close' | t }}">
+          {% render 'icon-close' %}
+        </button>
+      </div>
+      <nav class="allset-drawer__nav">
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}">{{ link.title | escape }}</a>
+        {%- endfor -%}
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}">{{ 'customer.account' | t }}</a>
+        {%- endif -%}
+      </nav>
+    </div>
+  </div>
+
+  {%- comment -%} Búsqueda a pantalla completa {%- endcomment -%}
+  <div class="allset-search" data-allset-search aria-hidden="true">
+    <button type="button" class="allset-icon-btn allset-search__close" data-allset-search-close aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon-close' %}
+    </button>
+    <div class="allset-search__inner">
+      <form action="{{ routes.search_url }}" method="get" role="search">
+        <input
+          class="allset-search__field"
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.search' | t }}"
+          autocomplete="off"
+        >
+        <p class="allset-search__hint">{{ shop.name }} — {{ section.settings.search_hint | escape }}</p>
+      </form>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header (ALLSET)",
+  "class": "section-header-allset",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "label": "Logo position (desktop)",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "search_hint",
+      "label": "Search hint",
+      "default": "Search the collection"
+    }
+  ]
+}
+{% endschema %}

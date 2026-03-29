@@ -1,0 +1,105 @@
+{%- comment -%}
+  Lifestyle — imágenes con personas / contexto editorial.
+{%- endcomment -%}
+
+<section class="allset-section" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <header class="allset-fc__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="allset-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="allset-heading allset-heading--md">{{ section.settings.title | escape }}</h2>
+      {%- if section.settings.text != blank -%}
+        <div class="allset-prose" style="margin: 1rem auto 0; text-align: center;">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </header>
+
+    <div class="allset-life__grid allset-life__grid--{{ section.settings.layout }}">
+      {%- for block in section.blocks -%}
+        <div class="allset-life__cell" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(min-width: 750px) 33vw, 100vw',
+                widths: '550, 750, 1000, 1200',
+                alt: block.settings.image.alt | default: block.settings.caption | escape
+            }}
+          {%- endif -%}
+          {%- if block.settings.caption != blank -%}
+            <p class="allset-eyebrow" style="padding:0.75rem 1rem;margin:0;text-align:center;">
+              {{ block.settings.caption | escape }}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lifestyle gallery",
+  "tag": "section",
+  "class": "section-lifestyle-gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "En contexto"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Lifestyle"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout (desktop)",
+      "options": [
+        { "value": "2", "label": "Two columns" },
+        { "value": "3", "label": "Three columns" }
+      ],
+      "default": "3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lifestyle gallery",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

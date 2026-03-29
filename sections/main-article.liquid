@@ -1,0 +1,39 @@
+{%- comment -%}
+  Artículo individual.
+{%- endcomment -%}
+
+<section class="allset-section" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <article style="max-width:42rem;margin-inline:auto;">
+      <header class="allset-page-header">
+        <p class="allset-eyebrow">
+          <a href="{{ blog.url }}" style="text-decoration:none;color:inherit;">{{ blog.title | escape }}</a>
+        </p>
+        <h1 class="allset-heading allset-heading--lg">{{ article.title | escape }}</h1>
+        <p class="allset-eyebrow" style="margin-top:0.75rem;">{{ article.published_at | time_tag: format: 'date' }}</p>
+      </header>
+      {%- if article.image -%}
+        <div style="margin-bottom:2rem;">
+          {{
+            article.image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              sizes: '100vw',
+              widths: '750, 1000, 1200',
+              alt: article.image.alt | default: article.title | escape
+          }}
+        </div>
+      {%- endif -%}
+      <div class="allset-prose rte">{{ article.content }}</div>
+    </article>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

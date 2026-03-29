@@ -1,0 +1,74 @@
+{%- comment -%}
+  Colección — rejilla premium con paginación.
+{%- endcomment -%}
+
+<section class="allset-section allset-section--tight" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <header class="allset-collection__head">
+      <p class="allset-eyebrow">{{ 'sections.collection_template.title' | t }}</p>
+      <h1 class="allset-heading allset-heading--lg">{{ collection.title | escape }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="allset-collection__desc rte">{{ collection.description }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- if collection.products_count > 0 -%}
+        <div class="allset-grid-products{% if section.settings.columns == '4' %} allset-grid-products--4{% endif %}">
+          {%- for product in collection.products -%}
+            {% render 'product-card-premium', product: product %}
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="allset-pagination" style="margin-top:3rem;text-align:center;" aria-label="Pagination">
+            {%- if paginate.previous -%}
+              <a class="allset-btn" href="{{ paginate.previous.url }}" style="margin-inline:0.35rem;">←</a>
+            {%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a class="allset-btn" href="{{ part.url }}" style="margin-inline:0.35rem;">{{ part.title }}</a>
+              {%- else -%}
+                <span class="allset-eyebrow" style="margin-inline:0.5rem;display:inline-block;">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}
+              <a class="allset-btn" href="{{ paginate.next.url }}" style="margin-inline:0.35rem;">→</a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <p class="allset-prose" style="text-align:center;">{{ 'sections.collection_template.empty' | t }}</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection (premium)",
+  "tag": "section",
+  "class": "section-main-collection-premium",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 4,
+      "label": "Products per page",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns on large screens",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    }
+  ]
+}
+{% endschema %}

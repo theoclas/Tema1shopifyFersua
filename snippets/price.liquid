@@ -1,0 +1,46 @@
+{%- comment -%}
+  Precio editorial: limpio. Con variant muestra esa variante; sin variant en PDP se usa la seleccionada.
+{%- endcomment -%}
+{%- liquid
+  if variant != blank
+    assign compare_at_price = variant.compare_at_price
+    assign price = variant.price
+    assign show_from = false
+  elsif product.price_varies
+    assign compare_at_price = product.compare_at_price
+    assign price = product.price_min
+    assign show_from = true
+  else
+    assign v = product.selected_or_first_available_variant
+    assign compare_at_price = v.compare_at_price
+    assign price = v.price
+    assign show_from = false
+  endif
+
+  assign money_price = price | money
+  if settings.currency_code_enabled
+    assign money_price = price | money_with_currency
+  endif
+
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="allset-price{% if on_sale %} allset-price--sale{% endif %}">
+  {%- if show_from and on_sale == false -%}
+    <span class="allset-price__from">{{ 'products.product.price.from_price_html' | t: price: money_price }}</span>
+  {%- elsif on_sale -%}
+    <span class="allset-price__current">{{ money_price }}</span>
+    <s class="allset-price__compare">
+      {% if settings.currency_code_enabled %}
+        {{ compare_at_price | money_with_currency }}
+      {% else %}
+        {{ compare_at_price | money }}
+      {% endif %}
+    </s>
+  {%- else -%}
+    <span class="allset-price__current">{{ money_price }}</span>
+  {%- endif -%}
+</div>

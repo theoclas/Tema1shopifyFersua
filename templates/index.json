@@ -1,0 +1,124 @@
+{
+  "sections": {
+    "header_main": {
+      "type": "header-allset",
+      "settings": {
+        "menu": "main-menu",
+        "logo_position": "center",
+        "search_hint": "Busca en la colección"
+      }
+    },
+    "hero_home": {
+      "type": "hero-editorial",
+      "settings": {
+        "eyebrow": "ALLSET JEWELRY",
+        "heading": "Más que una joya, es presencia",
+        "subheading": "Piezas atemporales para el día a día y los momentos que importan.",
+        "button_label": "Descubrir la colección",
+        "button_link": "shopify://collections/all",
+        "min_height": 78
+      }
+    },
+    "featured_collection_home": {
+      "type": "featured-collection-premium",
+      "settings": {
+        "eyebrow": "The edit",
+        "title": "Colección destacada",
+        "text": "<p>Selecciona una colección en el editor del tema para mostrar piezas aquí.</p>",
+        "products_to_show": 8,
+        "columns": "4",
+        "show_view_all": true,
+        "view_all_label": "Ver colección",
+        "empty_state": "Selecciona una colección en el editor del tema."
+      }
+    },
+    "featured_product_home": {
+      "type": "featured-product-premium",
+      "settings": {
+        "eyebrow": "Pieza del momento",
+        "button_label": "Ver detalle",
+        "empty_state": "Selecciona un producto en el editor del tema."
+      }
+    },
+    "brand_story_home": {
+      "type": "brand-story",
+      "settings": {
+        "eyebrow": "Nuestra filosofía",
+        "body": "<p>Creamos joyas pensadas para acompañarte en silencio: formas limpias, materiales honestos y un brillo que no grita.</p><p>Porque el lujo accesible no es volumen — es presencia.</p>",
+        "signature": "ALLSET JEWELRY"
+      }
+    },
+    "category_grid_home": {
+      "type": "category-grid",
+      "blocks": {
+        "cat_chains": {
+          "type": "category",
+          "settings": {
+            "title": "Cadenas",
+            "link": "shopify://collections/all"
+          }
+        },
+        "cat_rings": {
+          "type": "category",
+          "settings": {
+            "title": "Anillos",
+            "link": "shopify://collections/all"
+          }
+        },
+        "cat_bracelets": {
+          "type": "category",
+          "settings": {
+            "title": "Pulseras",
+            "link": "shopify://collections/all"
+          }
+        },
+        "cat_earrings": {
+          "type": "category",
+          "settings": {
+            "title": "Pendientes",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": ["cat_chains", "cat_rings", "cat_bracelets", "cat_earrings"],
+      "settings": {
+        "eyebrow": "Shop by category",
+        "title": "Categorías"
+      }
+    },
+    "lifestyle_home": {
+      "type": "lifestyle-gallery",
+      "blocks": {
+        "life_1": { "type": "image", "settings": {} },
+        "life_2": { "type": "image", "settings": {} },
+        "life_3": { "type": "image", "settings": {} }
+      },
+      "block_order": ["life_1", "life_2", "life_3"],
+      "settings": {
+        "eyebrow": "En contexto",
+        "title": "Lifestyle",
+        "text": "<p>Imágenes editoriales: añade fotografía con modelos en el editor de tema.</p>",
+        "layout": "3"
+      }
+    },
+    "footer_main": {
+      "type": "footer-allset",
+      "settings": {
+        "brand_title": "ALLSET JEWELRY",
+        "menu_title": "Explorar",
+        "menu": "footer",
+        "social_title": "Síguenos"
+      }
+    }
+  },
+  "order": [
+    "header_main",
+    "hero_home",
+    "featured_collection_home",
+    "featured_product_home",
+    "brand_story_home",
+    "category_grid_home",
+    "lifestyle_home",
+    "footer_main"
+  ]
+}

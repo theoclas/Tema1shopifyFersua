@@ -1,0 +1,112 @@
+{%- comment -%}
+  Colección destacada — rejilla editorial de productos.
+{%- endcomment -%}
+
+{%- assign coll = section.settings.collection -%}
+
+<section class="allset-section allset-section--tight" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <header class="allset-fc__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="allset-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="allset-heading allset-heading--lg">{{ section.settings.title | escape }}</h2>
+      {%- if section.settings.text != blank -%}
+        <div class="allset-prose" style="margin: 1rem auto 0; text-align: center;">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- if coll != blank and coll.products_count > 0 -%}
+      <div class="allset-grid-products{% if section.settings.columns == '4' %} allset-grid-products--4{% endif %}">
+        {%- for product in coll.products limit: section.settings.products_to_show -%}
+          {% render 'product-card-premium', product: product %}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_view_all and coll.url != blank -%}
+        <div style="text-align:center;margin-top:clamp(2rem,4vw,3rem);">
+          <a class="allset-btn allset-btn--gold" href="{{ coll.url }}">
+            {{ section.settings.view_all_label | escape }}
+            {% render 'icon-arrow' %}
+          </a>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <p class="allset-prose" style="text-align:center;margin:0 auto;">{{ section.settings.empty_state | escape }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "tag": "section",
+  "class": "section-featured-collection-premium",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The edit"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Colección destacada"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "label": "Products to show",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns on large screens",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show view all button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "Ver colección"
+    },
+    {
+      "type": "text",
+      "id": "empty_state",
+      "label": "Empty state",
+      "default": "Selecciona una colección en el editor del tema."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,21 @@
+{
+  "current": {
+    "logo_width": 140,
+    "color_background": "#F5F5F0",
+    "color_foreground": "#000000",
+    "color_accent": "#C9A74E",
+    "color_muted": "#6B6B6B",
+    "type_heading_font": "cormorant_garamond_n4",
+    "type_body_font": "inter_n4",
+    "footer_note": "<p>Handcrafted with intention.</p>"
+  },
+  "presets": {
+    "ALLSET": {
+      "logo_width": 140,
+      "color_background": "#F5F5F0",
+      "color_foreground": "#000000",
+      "color_accent": "#C9A74E",
+      "color_muted": "#6B6B6B"
+    }
+  }
+}

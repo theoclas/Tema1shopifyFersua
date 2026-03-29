@@ -1,0 +1,202 @@
+{%- comment -%}
+  PDP premium: galería editorial, zoom suave (allset-theme.js), formulario sobrio.
+{%- endcomment -%}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  if current_variant.featured_image
+    assign featured_media = current_variant.featured_image
+  else
+    assign featured_media = product.featured_media
+  endif
+-%}
+
+<section class="allset-product" id="section-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="allset-container">
+    <div class="allset-product__grid">
+      <div class="allset-product__gallery" data-allset-product-gallery>
+        <div class="allset-product__stage" data-allset-product-stage>
+          {%- if featured_media != blank -%}
+            {{
+              featured_media
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'eager',
+                sizes: '(min-width: 990px) 50vw, 100vw',
+                widths: '750, 1000, 1400, 1600',
+                alt: featured_media.alt | default: product.title | escape,
+                class: 'allset-product__main-img'
+            }}
+          {%- else -%}
+            <div class="allset-product-card__placeholder" style="min-height:100%;" aria-hidden="true"></div>
+          {%- endif -%}
+        </div>
+
+        {%- assign image_media_count = product.media | where: 'media_type', 'image' | size -%}
+        {%- if image_media_count > 1 -%}
+          <div class="allset-product__thumbs" role="tablist" aria-label="Product images">
+            {%- for media in product.media -%}
+              {%- if media.media_type == 'image' -%}
+                <button
+                  type="button"
+                  class="allset-product__thumb{% if media.id == featured_media.id %} is-active{% endif %}"
+                  data-allset-product-thumb
+                  data-full-src="{{ media | image_url: width: 1600 }}"
+                  data-alt="{{ media.alt | default: product.title | escape }}"
+                  aria-label="Image {{ forloop.index }}"
+                >
+                  {{
+                    media
+                    | image_url: width: 180
+                    | image_tag:
+                      loading: 'lazy',
+                      alt: media.alt | default: product.title | escape
+                  }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="allset-product__info">
+        {%- if section.settings.show_vendor and product.vendor != blank -%}
+          <p class="allset-product__vendor">{{ product.vendor | escape }}</p>
+        {%- endif -%}
+
+        <h1 class="allset-heading allset-heading--lg allset-product__title">{{ product.title | escape }}</h1>
+
+        <div class="allset-product__price-row" data-allset-product-price>
+          {% render 'price', product: product, variant: current_variant %}
+        </div>
+
+        {%- if section.settings.short_text != blank -%}
+          <div class="allset-product__short rte">{{ section.settings.short_text }}</div>
+        {%- elsif product.metafields.custom.meaning != blank -%}
+          <div class="allset-product__short rte">{{ product.metafields.custom.meaning | metafield_tag }}</div>
+        {%- endif -%}
+
+        {%- form 'product', product, id: 'AllsetProductForm', class: 'allset-product-form', novalidate: 'novalidate' -%}
+          {%- if product.has_only_default_variant -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          {%- else -%}
+            <div class="allset-product-form__row">
+              <label class="allset-product__label" for="AllsetVariantSelect-{{ section.id }}">{{ 'products.product.variant' | t }}</label>
+              <select
+                id="AllsetVariantSelect-{{ section.id }}"
+                class="allset-select"
+                name="id"
+                data-allset-variant-select
+              >
+                {%- for variant in product.variants -%}
+                  <option
+                    value="{{ variant.id }}"
+                    {% if variant == current_variant %}selected{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                    data-price-html="{{ variant.price | money }}"
+                    {% if variant.compare_at_price > variant.price %}
+                      data-compare-html="{{ variant.compare_at_price | money }}"
+                    {% endif %}
+                  >
+                    {{ variant.title | escape }}{% unless variant.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endif -%}
+
+          <div class="allset-product-form__row">
+            <label class="allset-product__label" for="Quantity-{{ section.id }}">{{ 'products.product.quantity.label' | t }}</label>
+            <input
+              class="allset-qty"
+              type="number"
+              id="Quantity-{{ section.id }}"
+              name="quantity"
+              min="1"
+              value="1"
+            >
+          </div>
+
+          <button
+            type="submit"
+            name="add"
+            class="allset-btn allset-btn--gold allset-product__submit"
+            {% if current_variant.available == false %}disabled{% endif %}
+            data-allset-add-to-cart
+          >
+            {%- if current_variant.available -%}
+              {{ 'products.product.add_to_cart' | t }}
+            {%- else -%}
+              {{ 'products.product.sold_out' | t }}
+            {%- endif -%}
+          </button>
+        {%- endform -%}
+
+        <div class="allset-product__meta">
+          {%- if cart.taxes_included -%}
+            <p>{{ 'products.product.include_taxes' | t }}</p>
+          {%- endif -%}
+          {%- if shop.shipping_policy != blank -%}
+            <p>{{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- if product.description != blank -%}
+          <div class="allset-product__description rte">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('section-{{ section.id }}');
+    if (!root) return;
+    var select = root.querySelector('[data-allset-variant-select]');
+    var priceBox = root.querySelector('[data-allset-product-price]');
+    var submit = root.querySelector('[data-allset-add-to-cart]');
+    if (!select) return;
+    select.addEventListener('change', function () {
+      var opt = select.options[select.selectedIndex];
+      if (priceBox && opt.dataset.priceHtml) {
+        var html = '<div class="allset-price"><span class="allset-price__current">' + opt.dataset.priceHtml + '</span>';
+        if (opt.dataset.compareHtml) {
+          html += ' <s class="allset-price__compare">' + opt.dataset.compareHtml + '</s>';
+        }
+        html += '</div>';
+        priceBox.innerHTML = html;
+      }
+      if (submit) {
+        submit.disabled = opt.disabled;
+        submit.textContent = opt.disabled
+          ? {{ 'products.product.sold_out' | t | json }}
+          : {{ 'products.product.add_to_cart' | t | json }};
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product (premium)",
+  "tag": "section",
+  "class": "section-main-product-premium",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "short_text",
+      "label": "Short meaning (above form)",
+      "info": "Optional. Metafield: custom.meaning"
+    }
+  ]
+}
+{% endschema %}

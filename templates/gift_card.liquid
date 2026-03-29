@@ -1,0 +1,31 @@
+{%- comment -%}
+  Tarjeta regalo — vista centrada, tipografía de marca.
+{%- endcomment -%}
+{% layout none %}
+
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ gift_card.balance | money }} — {{ shop.name }}</title>
+    {{ content_for_header }}
+    {% style %}
+      {{ settings.type_body_font | font_face: font_display: 'swap' }}
+      {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+    {% endstyle %}
+    {{ 'allset-base.css' | asset_url | stylesheet_tag }}
+    {% render 'css-variables' %}
+  </head>
+  <body class="allset-body" style="display:flex;min-height:100vh;align-items:center;justify-content:center;padding:2rem;">
+    <main style="max-width:28rem;width:100%;text-align:center;border:1px solid color-mix(in srgb, var(--allset-fg) 12%, transparent);padding:clamp(2rem,5vw,3rem);background:var(--allset-bg);box-shadow:0 24px 80px color-mix(in srgb, var(--allset-fg) 8%, transparent);">
+      <p class="allset-header__logo-text" style="font-size:0.75rem;margin-bottom:1.5rem;">{{ shop.name | upcase }}</p>
+      <p class="allset-eyebrow">GIFT CARD</p>
+      <p class="allset-heading allset-heading--lg" style="margin:0.5rem 0 1rem;">{{ gift_card.balance | money }}</p>
+      <p style="font-size:0.875rem;color:var(--allset-muted);letter-spacing:0.18em;font-family:var(--allset-font-body);">{{ gift_card.code | format_code }}</p>
+      {%- if gift_card.enabled == false -%}
+        <p class="allset-prose" style="margin-top:1rem;">This gift card is no longer valid.</p>
+      {%- endif -%}
+    </main>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+{%- comment -%}
+  Resultados de búsqueda — mismo lenguaje visual que colección.
+{%- endcomment -%}
+
+<section class="allset-section allset-section--tight" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <header class="allset-collection__head">
+      <h1 class="allset-heading allset-heading--lg">{{ 'templates.search.title' | t }}</h1>
+      <form action="{{ routes.search_url }}" method="get" role="search" style="margin-top:1.5rem;max-width:28rem;margin-inline:auto;">
+        <input type="search" name="q" value="{{ search.terms | escape }}" class="allset-search__field" style="border:1px solid color-mix(in srgb, var(--allset-fg) 18%, transparent);padding:0.75rem 1rem;width:100%;border-radius:var(--allset-radius);background:var(--allset-bg);">
+      </form>
+    </header>
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="allset-eyebrow" style="text-align:center;margin-bottom:2rem;">
+          {{ 'templates.search.results_with_count' | t: count: search.results_count }}
+        </p>
+        <div class="allset-grid-products allset-grid-products--4">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card-premium', product: item %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="allset-prose" style="text-align:center;">{{ 'templates.search.no_results' | t }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search",
+  "tag": "section",
+  "class": "section-main-search",
+  "settings": []
+}
+{% endschema %}

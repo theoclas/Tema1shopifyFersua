@@ -1,0 +1,54 @@
+{%- comment -%}
+  Storytelling de marca — texto corto con peso emocional.
+{%- endcomment -%}
+
+<section class="allset-section allset-section--tight" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <div class="allset-story">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="allset-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <div class="allset-story__text rte">
+        {{ section.settings.body }}
+      </div>
+      {%- if section.settings.signature != blank -%}
+        <p class="allset-eyebrow" style="margin-top:2rem;margin-bottom:0;color:var(--allset-accent);">
+          {{ section.settings.signature | escape }}
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand story",
+  "tag": "section",
+  "class": "section-brand-story",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Nuestra filosofía"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Story",
+      "default": "<p>Creamos joyas pensadas para acompañarte en silencio: formas limpias, materiales honestos y un brillo que no grita.</p><p>Porque el lujo accesible no es volumen — es <span class=\"allset-story__accent\">presencia</span>.</p>"
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Signature line",
+      "default": "ALLSET JEWELRY"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand story"
+    }
+  ]
+}
+{% endschema %}

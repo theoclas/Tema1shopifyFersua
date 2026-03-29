@@ -1,0 +1,23 @@
+{%- comment -%}
+  Página genérica (About, Contact, etc.)
+{%- endcomment -%}
+
+<section class="allset-section" id="section-{{ section.id }}">
+  <div class="allset-container">
+    <header class="allset-page-header">
+      <h1 class="allset-heading allset-heading--lg">{{ page.title | escape }}</h1>
+    </header>
+    <div class="allset-prose rte" style="max-width:40rem;margin-inline:auto;">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "section",
+  "class": "section-main-page",
+  "settings": []
+}
+{% endschema %}
