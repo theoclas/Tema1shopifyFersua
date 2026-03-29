@@ -8,12 +8,24 @@
     --allset-accent: {{ settings.color_accent }};
     --allset-muted: {{ settings.color_muted }};
     --allset-gray-soft: #E8E8E4;
-    --allset-font-heading: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
-    --allset-font-heading-style: {{ settings.type_heading_font.style }};
-    --allset-font-heading-weight: {{ settings.type_heading_font.weight }};
-    --allset-font-body: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
-    --allset-font-body-style: {{ settings.type_body_font.style }};
-    --allset-font-body-weight: {{ settings.type_body_font.weight }};
+    {% if settings.type_heading_font != blank %}
+      --allset-font-heading: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+      --allset-font-heading-style: {{ settings.type_heading_font.style }};
+      --allset-font-heading-weight: {{ settings.type_heading_font.weight }};
+    {% else %}
+      --allset-font-heading: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+      --allset-font-heading-style: normal;
+      --allset-font-heading-weight: 400;
+    {% endif %}
+    {% if settings.type_body_font != blank %}
+      --allset-font-body: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+      --allset-font-body-style: {{ settings.type_body_font.style }};
+      --allset-font-body-weight: {{ settings.type_body_font.weight }};
+    {% else %}
+      --allset-font-body: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --allset-font-body-style: normal;
+      --allset-font-body-weight: 400;
+    {% endif %}
     --allset-ease: cubic-bezier(0.22, 1, 0.36, 1);
     --allset-duration: 0.45s;
     --allset-radius: 2px;

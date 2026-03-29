@@ -30,14 +30,22 @@
     {{ content_for_header }}
 
     {%- liquid
-      assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
-      assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
+      assign allset_body_bold = nil
+      assign allset_body_italic = nil
+      if settings.type_body_font != blank
+        assign allset_body_bold = settings.type_body_font | font_modify: 'weight', 'bold'
+        assign allset_body_italic = settings.type_body_font | font_modify: 'style', 'italic'
+      endif
     -%}
     {% style %}
-      {{ settings.type_body_font | font_face: font_display: 'swap' }}
-      {{ settings.type_heading_font | font_face: font_display: 'swap' }}
-      {% if body_font_bold %}{{ body_font_bold | font_face: font_display: 'swap' }}{% endif %}
-      {% if body_font_italic %}{{ body_font_italic | font_face: font_display: 'swap' }}{% endif %}
+      {% if settings.type_body_font != blank %}
+        {{ settings.type_body_font | font_face: font_display: 'swap' }}
+      {% endif %}
+      {% if settings.type_heading_font != blank %}
+        {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+      {% endif %}
+      {% if allset_body_bold %}{{ allset_body_bold | font_face: font_display: 'swap' }}{% endif %}
+      {% if allset_body_italic %}{{ allset_body_italic | font_face: font_display: 'swap' }}{% endif %}
     {% endstyle %}
 
     {{ 'allset-base.css' | asset_url | stylesheet_tag }}

@@ -65,9 +65,11 @@
           </a>
         {%- else -%}
           <nav class="allset-nav" aria-label="Main">
-            {%- for link in section.settings.menu.links -%}
-              <a class="allset-nav__link" href="{{ link.url }}">{{ link.title | escape }}</a>
-            {%- endfor -%}
+            {%- if section.settings.menu != blank -%}
+              {%- for link in section.settings.menu.links -%}
+                <a class="allset-nav__link" href="{{ link.url }}">{{ link.title | escape }}</a>
+              {%- endfor -%}
+            {%- endif -%}
           </nav>
         {%- endunless -%}
       </div>
@@ -87,9 +89,11 @@
 
     {%- unless logo_left -%}
       <nav class="allset-nav" aria-label="Main">
-        {%- for link in section.settings.menu.links -%}
-          <a class="allset-nav__link" href="{{ link.url }}">{{ link.title | escape }}</a>
-        {%- endfor -%}
+        {%- if section.settings.menu != blank -%}
+          {%- for link in section.settings.menu.links -%}
+            <a class="allset-nav__link" href="{{ link.url }}">{{ link.title | escape }}</a>
+          {%- endfor -%}
+        {%- endif -%}
       </nav>
     {%- endunless -%}
   </div>
@@ -105,9 +109,11 @@
         </button>
       </div>
       <nav class="allset-drawer__nav">
-        {%- for link in section.settings.menu.links -%}
-          <a href="{{ link.url }}">{{ link.title | escape }}</a>
-        {%- endfor -%}
+        {%- if section.settings.menu != blank -%}
+          {%- for link in section.settings.menu.links -%}
+            <a href="{{ link.url }}">{{ link.title | escape }}</a>
+          {%- endfor -%}
+        {%- endif -%}
         {%- if shop.customer_accounts_enabled -%}
           <a href="{{ routes.account_url }}">{{ 'customer.account' | t }}</a>
         {%- endif -%}
