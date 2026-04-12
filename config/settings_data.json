@@ -17,7 +17,14 @@
     "type_heading_font": "cormorant_garamond_n4",
     "type_body_font": "inter_n4",
     "footer_note": "<p>Handcrafted with intention.</p>",
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "pagefly-page-builder": {
+        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "ALLSET": {
